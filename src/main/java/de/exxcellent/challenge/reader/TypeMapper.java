@@ -1,8 +1,25 @@
-package de.exxcellent.challenge.models;
+package de.exxcellent.challenge.reader;
 
 import java.lang.reflect.Field;
 
+/**
+ * The TypeMapper class provides a method to set the value of a field on an
+ * object
+ * using reflection. It supports setting fields of type int, String, double,
+ * float,
+ * and boolean.
+ */
 public class TypeMapper {
+
+    /**
+     * Sets the value of the specified field on the given object.
+     *
+     * @param field  the field to be set
+     * @param object the object whose field should be modified
+     * @param value  the value to set the field to, as a String
+     * @throws IllegalAccessException if the field is not accessible or cannot be
+     *                                set
+     */
     public static void setField(Field field, Object object, String value) throws IllegalAccessException {
         field.setAccessible(true);
 

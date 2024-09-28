@@ -1,6 +1,29 @@
 package de.exxcellent.challenge.models;
 
+/**
+ * The {@code WeatherModel} class represents a model for weather data.
+ * It contains information about the day, maximum temperature (mxT), and minimum
+ * temperature (mnT).
+ * 
+ * <p>
+ * This class provides methods to get and set the day, maximum temperature, and
+ * minimum temperature.
+ * It also overrides the {@code toString} and {@code equals} methods from the
+ * {@code Object} class.
+ * </p>
+ * 
+ * <p>
+ * Example usage:
+ * 
+ * <pre>
+ * WeatherModel weather = new WeatherModel(1, 30, 15);
+ * System.out.println(weather);
+ * </pre>
+ * </p>
+ */
+
 public class WeatherModel {
+
     private int day;
     private int mxT;
     private int mnT;

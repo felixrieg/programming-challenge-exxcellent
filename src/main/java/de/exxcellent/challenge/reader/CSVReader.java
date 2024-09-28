@@ -10,8 +10,14 @@ import java.util.List;
 import java.util.Scanner;
 
 import de.exxcellent.challenge.models.ModelException;
-import de.exxcellent.challenge.models.TypeMapper;
 
+/**
+ * The CSVReader class provides a method to read a CSV file and create objects
+ * from it. The first line of the file is expected to contain the column names.
+ * The columns must be in the same order as the fields in the object.
+ *
+ * @param <T> the type of object to be created
+ */
 public class CSVReader<T> extends ObjectFileReader<T> {
     @Override
     public List<T> readFile(String path, Class<T> clazz) throws FileNotFoundException, ModelException {
@@ -20,7 +26,7 @@ public class CSVReader<T> extends ObjectFileReader<T> {
 
         try (Scanner scanner = new Scanner(new File(path))) {
 
-            String[] columns = scanner.nextLine().toLowerCase().split(",");
+            String[] columns = scanner.nextLine().toLowerCase().replace(" ", "").split(",");
 
             // check that the expected columns are present
             for (Field field : clazz.getDeclaredFields()) {
