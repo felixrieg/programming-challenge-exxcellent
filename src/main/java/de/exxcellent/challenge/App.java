@@ -1,10 +1,12 @@
 package de.exxcellent.challenge;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.util.Comparator;
+import java.util.List;
 
+import de.exxcellent.challenge.models.ModelException;
 import de.exxcellent.challenge.models.WeatherModel;
+import de.exxcellent.challenge.reader.CSVReader;
 
 /**
  * The entry class for your solution. This class is only aimed as starting point
@@ -25,41 +27,19 @@ public final class App {
         String dayWithSmallestTempSpread = "Someday";
         String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
 
-        // Your preparation code …
+        final String WEATHER_PATH = "./src/main/resources/de/exxcellent/challenge/weather.csv";
 
-        String weatherPath = "./src/main/resources/de/exxcellent/challenge/weather.csv";
-
-        try (Scanner scanner = new Scanner(new File(weatherPath))) {
-            String[] columns = scanner.nextLine().split(",");
-
-            // check that the right columns are as expected
-            assert columns[0].equals("Day");
-            assert columns[1].equals("MxT");
-            assert columns[2].equals("MnT");
-
-            int dayIndex = -1;
-            int minTempSpread = -1;
-            while (scanner.hasNextLine()) {
-                String[] line = scanner.nextLine().split(",");
-
-                WeatherModel weatherModel = new WeatherModel(Integer.parseInt(line[0]), Integer.parseInt(line[1]),
-                        Integer.parseInt(line[2]));
-                int newSpread = weatherModel.getMaxTemp() - weatherModel.getMinTemp();
-
-                System.out.println(weatherModel);
-
-                if (minTempSpread == -1 || newSpread < minTempSpread) {
-                    minTempSpread = newSpread;
-                    dayIndex = weatherModel.getDay();
-                }
+        try {
+            CSVReader<WeatherModel> weatherReader = new CSVReader<>();
+            List<WeatherModel> weatherModels = weatherReader.readFile(WEATHER_PATH, WeatherModel.class);
+            var minSpread = weatherModels.stream().min(Comparator.comparing(wm -> wm.getMxT() - wm.getMnT()));
+            if (minSpread.isPresent()) {
+                dayWithSmallestTempSpread = Integer.toString(minSpread.get().getDay());
             }
 
-            if (dayIndex != -1) {
-                dayWithSmallestTempSpread = Integer.toString(dayIndex);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ModelException | FileNotFoundException exception) {
+            exception.printStackTrace();
+            System.exit(1);
         }
 
         // Your day analysis function call …

@@ -2,21 +2,39 @@ package de.exxcellent.challenge.models;
 
 public class WeatherModel {
     private int day;
-    private int maxTemp;
-    private int minTemp;
+    private int mxT;
+    private int mnT;
+
+    public WeatherModel() {
+    }
 
     public WeatherModel(int day, int maxTemp, int minTemp) {
         this.day = day;
-        this.maxTemp = maxTemp;
-        this.minTemp = minTemp;
+        this.mxT = maxTemp;
+        this.mnT = minTemp;
     }
 
     @Override
     public String toString() {
-        return "WeatherModel [day=" + day + ", maxTemp=" + maxTemp + ", minTemp=" + minTemp + "]";
+        return "WeatherModel [day=" + day + ", maxTemp=" + mxT + ", minTemp=" + mnT + "]";
     }
 
-    public WeatherModel() {
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        WeatherModel other = (WeatherModel) obj;
+        if (day != other.day)
+            return false;
+        if (mxT != other.mxT)
+            return false;
+        if (mnT != other.mnT)
+            return false;
+        return true;
     }
 
     public int getDay() {
@@ -27,20 +45,20 @@ public class WeatherModel {
         this.day = day;
     }
 
-    public int getMaxTemp() {
-        return maxTemp;
+    public int getMxT() {
+        return mxT;
     }
 
-    public void setMaxTemp(int maxTemp) {
-        this.maxTemp = maxTemp;
+    public void setMxT(int maxTemp) {
+        this.mxT = maxTemp;
     }
 
-    public int getMinTemp() {
-        return minTemp;
+    public int getMnT() {
+        return mnT;
     }
 
-    public void setMinTemp(int minTemp) {
-        this.minTemp = minTemp;
+    public void setMnT(int minTemp) {
+        this.mnT = minTemp;
     }
 
 }
