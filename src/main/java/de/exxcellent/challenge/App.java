@@ -53,8 +53,9 @@ public final class App {
             var minDifference = footballModels.stream()
                     .min(Comparator
                             .comparing(
-                                    fb -> fb.getGoals()
-                                            - fb.getGoalsAllowed()));
+                                    fb -> fb.getGoals() > fb.getGoalsAllowed()
+                                            ? fb.getGoals() - fb.getGoalsAllowed()
+                                            : fb.getGoalsAllowed() - fb.getGoals()));
             if (minDifference.isPresent()) {
                 teamWithSmallestGoalSpread = minDifference.get().getTeam();
             }
