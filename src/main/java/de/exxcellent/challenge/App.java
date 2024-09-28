@@ -1,7 +1,10 @@
 package de.exxcellent.challenge;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.Scanner;
+
+import de.exxcellent.challenge.models.WeatherModel;
 
 /**
  * The entry class for your solution. This class is only aimed as starting point
@@ -39,14 +42,15 @@ public final class App {
             while (scanner.hasNextLine()) {
                 String[] line = scanner.nextLine().split(",");
 
-                int day = Integer.parseInt(line[0]);
-                int maxTemp = Integer.parseInt(line[1]);
-                int minTemp = Integer.parseInt(line[2]);
-                int newSpread = maxTemp - minTemp;
+                WeatherModel weatherModel = new WeatherModel(Integer.parseInt(line[0]), Integer.parseInt(line[1]),
+                        Integer.parseInt(line[2]));
+                int newSpread = weatherModel.getMaxTemp() - weatherModel.getMinTemp();
+
+                System.out.println(weatherModel);
 
                 if (minTempSpread == -1 || newSpread < minTempSpread) {
                     minTempSpread = newSpread;
-                    dayIndex = day;
+                    dayIndex = weatherModel.getDay();
                 }
             }
 
